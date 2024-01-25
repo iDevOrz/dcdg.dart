@@ -35,7 +35,7 @@ class PlantUmlBuilder implements DiagramBuilder {
 
   @override
   void addInterface(InterfaceType element) {
-    final interfaceElement = element.element;
+    final interfaceElement = element.element2;
     final interfaceClass = namespacedTypeName(interfaceElement);
     _relationships.add('$interfaceClass <|-- $_currentClass');
   }
@@ -51,14 +51,14 @@ class PlantUmlBuilder implements DiagramBuilder {
 
   @override
   void addMixin(InterfaceType element) {
-    final mixinElement = element.element;
+    final mixinElement = element.element2;
     final mixinClass = namespacedTypeName(mixinElement);
     _relationships.add('$mixinClass <|-- $_currentClass');
   }
 
   @override
   void addSuper(InterfaceType element) {
-    final superElement = element.element;
+    final superElement = element.element2;
     final superClass = namespacedTypeName(superElement);
     _relationships.add('$superClass <|-- $_currentClass');
   }

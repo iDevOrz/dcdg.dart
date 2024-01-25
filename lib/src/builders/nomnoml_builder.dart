@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
@@ -18,7 +19,7 @@ class NomnomlBuilder implements DiagramBuilder {
 
   @override
   void addAggregation(FieldElement element) {
-    final typeElement = element.type.element;
+    final typeElement = element.type.element2;
     if (typeElement is ClassElement) {
       final name = fullClassName(typeElement);
       _relationships.add('[$_currentClass]o-[$name]');
@@ -35,7 +36,8 @@ class NomnomlBuilder implements DiagramBuilder {
 
   @override
   void addInterface(InterfaceType element) {
-    final interfaceName = fullClassName(element.element);
+    debugger();
+    final interfaceName = fullClassName(element.element2);
     _relationships.add('[$interfaceName]<:--[$_currentClass]');
   }
 
@@ -46,13 +48,13 @@ class NomnomlBuilder implements DiagramBuilder {
 
   @override
   void addMixin(InterfaceType element) {
-    final mixinName = fullClassName(element.element);
+    final mixinName = fullClassName(element.element2);
     _relationships.add('[$mixinName]<:-[$_currentClass]');
   }
 
   @override
   void addSuper(InterfaceType element) {
-    final superName = fullClassName(element.element);
+    final superName = fullClassName(element.element2);
     _relationships.add('[$superName]<:-[$_currentClass]');
   }
 
@@ -112,8 +114,9 @@ class NomnomlBuilder implements DiagramBuilder {
     }).join(';\n'));
   }
 
-  String fullClassName(ClassElement element) {
-    final abstractModifier = element.isAbstract ? '<abstract>' : '';
+  String fullClassName(InterfaceElement element) {
+    final abstractModifier =
+        (element is ClassElement && element.isAbstract) ? '<abstract>' : '';
     final className = typeName(element, withNullability: false);
     return '$abstractModifier$className';
   }

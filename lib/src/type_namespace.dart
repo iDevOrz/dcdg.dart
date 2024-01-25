@@ -15,7 +15,7 @@ String typeNamespace(
   // little extra work to get the type.
   if (element is FieldElement) {
     library =
-        element.type.element?.library ?? element.type.alias?.element.library;
+        element.type.element2?.library ?? element.type.alias?.element.library;
   }
 
   final namespace = library?.identifier

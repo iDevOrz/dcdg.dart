@@ -44,7 +44,7 @@ class MermaidBuilder implements DiagramBuilder {
 
   @override
   void addInterface(InterfaceType element) {
-    final interfaceElement = element.element;
+    final interfaceElement = element.element2;
     final interfaceClass = namespacedTypeName(interfaceElement);
     _lines.add('$interfaceClass <|.. $_currentClass');
   }
@@ -62,14 +62,14 @@ class MermaidBuilder implements DiagramBuilder {
 
   @override
   void addMixin(InterfaceType element) {
-    final mixinElement = element.element;
+    final mixinElement = element.element2;
     final mixinClass = namespacedTypeName(mixinElement);
     _lines.add('$mixinClass <|-- $_currentClass');
   }
 
   @override
   void addSuper(InterfaceType element) {
-    final superElement = element.element;
+    final superElement = element.element2;
     final superClass = namespacedTypeName(superElement);
     _lines.add('$superClass <|-- $_currentClass');
   }
@@ -81,7 +81,7 @@ class MermaidBuilder implements DiagramBuilder {
     if (element.isAbstract) {
       _lines.add('<<abstract>> $_currentClass');
     }
-    if (element.isEnum) {
+    if (element is EnumElement) {
       _lines.add('<<enumeration>> $_currentClass');
     }
   }

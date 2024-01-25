@@ -92,7 +92,7 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
   /// one of those provided in the `hasA` constructor parameter.
   bool hasA(ClassElement element) {
     for (final field in element.fields) {
-      final typeName = field.type.element?.name ?? '';
+      final typeName = field.type.element2?.name ?? '';
 
       if (_hasA.any((r) => r.hasMatch(typeName))) {
         return true;
@@ -108,7 +108,7 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
   bool isA(ClassElement element) {
     var current = element.thisType;
     while (true) {
-      if (_isA.any((r) => r.hasMatch(current.element.name))) {
+      if (_isA.any((r) => r.hasMatch(current.element2.name))) {
         return true;
       }
 
@@ -121,11 +121,11 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
     }
 
     for (final needle in _isA) {
-      if (element.interfaces.any((i) => needle.hasMatch(i.element.name))) {
+      if (element.interfaces.any((i) => needle.hasMatch(i.element2.name))) {
         return true;
       }
 
-      if (element.mixins.any((m) => needle.hasMatch(m.element.name))) {
+      if (element.mixins.any((m) => needle.hasMatch(m.element2.name))) {
         return true;
       }
     }
@@ -227,10 +227,10 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
     // TODO: Apply more regex filtering?
     if (!_excludeIsA) {
       final superType = element.supertype;
-      final superElement = superType?.element;
+      final superElement = superType?.element2;
 
       final superIsObject = superType?.isDartCoreObject == true;
-      final superIsPrivate = superType?.element.isPrivate == true;
+      final superIsPrivate = superType?.element2.isPrivate == true;
       final superIsIncluded =
           (superElement != null) && shouldInclude(superElement);
 
@@ -246,7 +246,7 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
           continue;
         }
 
-        if (_excludePrivateClasses && mixinType.element.isPrivate) {
+        if (_excludePrivateClasses && mixinType.element2.isPrivate) {
           continue;
         }
 
@@ -258,7 +258,7 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
           continue;
         }
 
-        if (_excludePrivateClasses && interfaceType.element.isPrivate) {
+        if (_excludePrivateClasses && interfaceType.element2.isPrivate) {
           continue;
         }
 
@@ -298,7 +298,7 @@ class DiagramVisitor extends RecursiveElementVisitor<void> {
 
       // We ignore things in dart:core because they're everywhere
       // and we generally don't care about them.
-      if (type.element?.library?.isDartCore == true) {
+      if (type.element2?.library?.isDartCore == true) {
         return;
       }
 

@@ -24,7 +24,7 @@ class DotBuilder implements DiagramBuilder {
 
   @override
   void addInterface(InterfaceType element) {
-    final interfaceElement = element.element;
+    final interfaceElement = element.element2;
     final interfaceClass = namespacedTypeName(interfaceElement);
     _lines.add('  $_currentClass -> $interfaceClass');
   }
@@ -36,14 +36,14 @@ class DotBuilder implements DiagramBuilder {
 
   @override
   void addMixin(InterfaceType element) {
-    final mixinElement = element.element;
+    final mixinElement = element.element2;
     final mixinClass = namespacedTypeName(mixinElement);
     _lines.add('  $_currentClass -> $mixinClass');
   }
 
   @override
   void addSuper(InterfaceType element) {
-    final superElement = element.element;
+    final superElement = element.element2;
     final superClass = namespacedTypeName(superElement);
     _lines.add('  $_currentClass -> $superClass');
   }

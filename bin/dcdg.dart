@@ -7,7 +7,6 @@ import 'package:path/path.dart' as path;
 
 Future<Null> main(Iterable<String> arguments) async {
   final config = Configuration.fromCommandLine(arguments);
-
   if (config.shouldShowHelp) {
     print(makeHelp());
     exit(0);
